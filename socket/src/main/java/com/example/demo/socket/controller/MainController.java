@@ -49,6 +49,8 @@ public class MainController {
 			Room room = new Room();
 			room.setRoomNumber(++roomNumber);
 			room.setRoomName(roomName);
+			// roomNumber insert 위치
+			System.out.println("@@@@@@@@@@@@@@@@@@@" + roomName);
 			roomList.add(room);
 		}
 		return roomList;

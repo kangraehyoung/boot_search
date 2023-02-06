@@ -2,6 +2,7 @@ package com.example.demo.socket.handler;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,8 +25,26 @@ public class SocketHandler extends TextWebSocketHandler {
 	public void handleTextMessage(WebSocketSession session, TextMessage message) {
 		//메시지 발송
 		String msg = message.getPayload();
-		JSONObject obj = jsonToObjectParser(msg);
+//		String target = "type";
+//		int target_num = msg.indexOf(target); 
+//		String result = msg.substring(target_num,(msg.substring(target_num).indexOf(",\"r")+target_num));
+//		System.out.println("######################" + result);
 		
+//		String[] msgArr = msg.split(", ");
+		
+		List<String> msgList = Arrays.asList(msg.split(","));
+		
+//		System.out.println("msgList.get(1)" + msgList.get(1).substring(14,msgList.get(1).length()).replaceAll("[^\uAC00-\uD7A30-9a-zA-Z]", ""));
+//		System.out.println("msgList.get(3)" + msgList.get(3).substring(12,msgList.get(3).length()).replaceAll("[^\uAC00-\uD7A30-9a-zA-Z]", ""));
+//		System.out.println("msgList.get(4)" + msgList.get(4).substring(7,msgList.get(4).length()).replaceAll("[^\uAC00-\uD7A30-9a-zA-Z]", ""));
+		
+		String roomNo = msgList.get(1).substring(14,msgList.get(1).length()).replaceAll("[^\uAC00-\uD7A30-9a-zA-Z]", "");
+		String userNickname = msgList.get(3).substring(12,msgList.get(3).length()).replaceAll("[^\uAC00-\uD7A30-9a-zA-Z]", "");
+		String chatMsg = msgList.get(4).substring(7,msgList.get(4).length()).replaceAll("[^\uAC00-\uD7A30-9a-zA-Z]", "");
+		
+		System.out.println(roomNo + ", " +  userNickname + ", " +  chatMsg);
+		
+		JSONObject obj = jsonToObjectParser(msg);
 		String rN = (String) obj.get("roomNumber");
 		HashMap<String, Object> temp = new HashMap<String, Object>();
 		if(rls.size() > 0) {
